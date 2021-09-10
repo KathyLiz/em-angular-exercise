@@ -31,6 +31,9 @@ export class CurrencyFormComponent implements OnInit {
 
   constructor(public activeModal: NgbActiveModal, private fb: FormBuilder) {
     this.currencyForm = this.fb.group({
+      countryCode: [null, [Validators.required]],//"US",
+      languageIsoCode: "es",
+      currencyCode: [null, [Validators.required]],//"MXN",
       useCode: [null, [Validators.required]],
       cents: [null, [CustomValidators.range([0, 4])]],
       currencyPosition: [null, [Validators.required]],
@@ -57,6 +60,7 @@ export class CurrencyFormComponent implements OnInit {
 
   saveCurrency() {
     console.log(this.currencyForm.value);
+    
   }
 
 }

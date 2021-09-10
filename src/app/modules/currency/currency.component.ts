@@ -56,6 +56,11 @@ export class CurrencyComponent implements OnInit {
    // this.bsModalRef.content.closeBtnName = 'Close';
    const modalRef = this.modalService.open(CurrencyFormComponent);
    modalRef.componentInstance.currencyRecibed = currency;
+   modalRef.result.then((result) => {
+    console.log(result)
+  }, (reason) => {
+    console.log('Dismissed action: ' + reason);
+  });
   }
 
   editCurrency(currency?:Currency){

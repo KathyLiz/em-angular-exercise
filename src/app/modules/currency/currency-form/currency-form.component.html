@@ -23,6 +23,36 @@
         <div class="row">
             <div class="col-md-12">
                 <mat-form-field appearance="outline">
+                    <mat-label>Country code</mat-label>
+                    <mat-select formControlName="countryCode" required>
+                        <mat-option value="AFTER">After</mat-option>
+                        <mat-option value="BEFORE">Before</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="currencyForm.controls['countryCode'].errors">
+                        Your selection is invalid
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>Currency code</mat-label>
+                    <mat-select formControlName="currencyCode" required>
+                        <mat-option value="AFTER">After</mat-option>
+                        <mat-option value="BEFORE">Before</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="currencyForm.controls['currencyCode'].errors">
+                        Your selection is invalid
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <mat-form-field appearance="outline">
                     <mat-label>Currency position</mat-label>
                     <mat-select formControlName="currencyPosition" required>
                         <mat-option value="AFTER">After</mat-option>
@@ -33,7 +63,6 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-
         </div>
 
         <div class="row">
@@ -85,5 +114,6 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Close</button>
-    <button type="button" class="btn btn-primary" [disabled]="!currencyForm.valid" (click)="saveCurrency()">Save changes</button>
+    <button type="button" class="btn btn-primary" [disabled]="!currencyForm.valid" (click)="saveCurrency()">Save
+        changes</button>
 </div>
