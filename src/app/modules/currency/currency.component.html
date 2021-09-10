@@ -46,7 +46,7 @@
           </ngx-datatable-column>
 
           <!-- action buttons -->
-          <ngx-datatable-column name="Acciones" sortable="false" [minWidth]="150"
+          <ngx-datatable-column name="Actions" sortable="false" [minWidth]="150"
               [maxWidth]="150">
               <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex"
                   ngx-datatable-cell-template>
@@ -55,13 +55,14 @@
                       matTooltipPosition="above"
                       
                           (click)="editCurrency(row)">
-                          <i class="fas fa-edit"></i>
+                          <i class="fas fa-edit col-primary"></i>
                       </button>
+                      
                       <button class="btn tblActnBtn h-auto"
                       matTooltip="Modificar información de este diagnóstico"
                       matTooltipPosition="above"
                           (click)="deleteCurrency(row)">
-                          <i class="fas fa-trash"></i>
+                          <i class="fas fa-trash col-primary"></i>
                       </button>
               </ng-template>
           </ngx-datatable-column>
