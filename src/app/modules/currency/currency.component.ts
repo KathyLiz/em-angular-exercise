@@ -51,26 +51,18 @@ export class CurrencyComponent implements OnInit {
     .catch((err) => { })
   }
 
-  addCurrency(template: TemplateRef<any>) {
-    const initialState = {
-      list: [
-        'Open a modal with component',
-        'Pass your data',
-        'Do something else',
-        '...'
-      ],
-      title: 'Modal with component'
-    };
+  addEditCurrency(currency?:Currency) {
     //this.bsModalRef = this.modalService.show(CurrencyFormComponent);
    // this.bsModalRef.content.closeBtnName = 'Close';
    const modalRef = this.modalService.open(CurrencyFormComponent);
+   modalRef.componentInstance.currencyRecibed = currency;
   }
 
-  editCurrency(row){
+  editCurrency(currency?:Currency){
 
   }
 
-  deleteCurrency(row){
+  deleteCurrency(currency?:Currency){
 
   }
 

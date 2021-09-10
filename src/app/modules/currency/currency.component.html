@@ -19,7 +19,7 @@
               </li>
 
               <li class="dropdown m-l-5" style="margin-left: 20px;">
-                <button (click)="addCurrency(template)" >Add Currency</button>
+                <button (click)="addEditCurrency()" >Add Currency</button>
               </li>
           </ul>
       </div>
@@ -54,7 +54,7 @@
                       matTooltip="Modificar información de este diagnóstico"
                       matTooltipPosition="above"
                       
-                          (click)="editCurrency(row)">
+                          (click)="addEditCurrency(row)">
                           <i class="fas fa-edit col-primary"></i>
                       </button>
                       
