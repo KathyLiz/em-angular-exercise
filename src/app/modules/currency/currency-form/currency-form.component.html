@@ -1,0 +1,81 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="activeModal.close()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form class="example-form" [formGroup]="currencyForm">
+
+        <!--<mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+                 placeholder="Ex. pat@example.com">
+          <mat-hint>Errors appear instantly!</mat-hint>
+          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>-->
+
+        <div class="row">
+            <div class="col-md-4">
+
+                <mat-label>Currency position</mat-label>
+            </div>
+            <div class="col-md-8">
+
+                <mat-radio-group formControlName="currencyPosition" aria-label="Select an option">
+                    <mat-radio-button value="AFTER">After</mat-radio-button>
+                    <mat-radio-button value="BEFORE">Before</mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <mat-label>Thousand identifier</mat-label>
+            </div>
+            <div class="col-md-8">
+
+                <mat-radio-group formControlName="thousandIdentifier" aria-label="Select an option">
+                    <mat-radio-button value=",">Comma (,)</mat-radio-button>
+                    <mat-radio-button value=".">Dot (.)</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <mat-label>Decimal separator</mat-label>
+            </div>
+            <div class="col-md-8">
+
+                <mat-radio-group formControlName="decimalSeparator" aria-label="Select an option">
+                    <mat-radio-button value=",">Comma (,)</mat-radio-button>
+                    <mat-radio-button value=".">Dot (.)</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Cents</mat-label>
+                    <input matInput placeholder="0" formControlName="cents">
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-checkbox class="example-margin" formControlName="userCode" labelPosition="after">
+            Show user code
+        </mat-checkbox>
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Close</button>
+    <button type="button" class="btn btn-primary">Save changes</button>
+</div>

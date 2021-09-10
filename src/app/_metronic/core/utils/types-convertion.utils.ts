@@ -1,3 +1,4 @@
+import * as moment from 'moment';
 /**
  * Convert string to Date
  *
@@ -18,6 +19,20 @@ export function getDateFromString(dateInStr: string = ''): Date {
   }
 
   return new Date();
+}
+
+/**
+ * Convert Date to string with format MM/dd/yyyy
+ *
+ * @param date: string (format => 2021-08-22T16:37:40.948Z)
+ */
+export function getStringFormatDate(date: Date): string {
+  if (date) {
+    let result = moment(date).format('MM/DD/YYYY');
+    return result;
+  }
+
+  return moment(new Date()).format('MM/DD/YYYY');
 }
 
 /**

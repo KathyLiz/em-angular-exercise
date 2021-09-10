@@ -19,6 +19,11 @@
 // Metronic styles (replace these path when using RTL css below)
 @import "./assets/sass/style.angular.scss";
 
+//Ngx datables styles
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/material.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
 // For RTL, check this documentation https://keenthemes.com/metronic/?page=docs&section=angular-rtl
 // @import "./assets/sass/style.angular.rtl.css";
 
@@ -103,3 +108,9 @@
   height: 3px;
   width: 100%;
 }
+
+body div.cdk-overlay-container {
+  z-index: 1060;
+}
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

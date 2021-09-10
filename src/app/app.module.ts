@@ -28,7 +28,8 @@ import { CurrencyModule } from './modules/currency/currency.module';
     HttpClientModule,
     AppRoutingModule,
     // NgbModule,
-    CurrencyModule
+    CurrencyModule,
+    NgbModule
   ],
   providers: [
     // {

@@ -2,7 +2,79 @@
     <h1>Currencies</h1>
     <div *ngIf="!isLoading">
         <currency-format *ngFor="let currency of currencies" [currency]="currency"> </currency-format>
+
+        <h3>
+          Client-side Search and Filtering
+        </h3>
+
+        <!-- Cabecera de la tabla -->
+        <div class="ngxTableHeader" style="height: 80px !important;">
+          <ul class="header-buttons header-search boton-buscar m-r-10">
+              <li class="dropdown m-l-20">
+                  <label for="search-input"><i
+                          class="material-icons search-icon">search</i></label>
+                  <input placeholder="Buscar diagnósticos"
+                      type="text" class="browser-default search-field"
+                      (keyup)="filterDatatable($event)" aria-label="Search box" />
+              </li>
+
+              <li class="dropdown m-l-5" style="margin-left: 20px;">
+                <button (click)="addCurrency(template)" >Add Currency</button>
+              </li>
+          </ul>
+      </div>
+
+      <!-- Detalle de la tabla -->
+      <ngx-datatable #table class="material" [rows]="currencies"
+          [columns]="columns" [sortType]="'multi'" [columnMode]="'force'"
+          [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+          [scrollbarH]="true">
+          <ngx-datatable-column name="Country code">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.countryCode }}
+              </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Currency code">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.currencyCode }}
+              </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Creation date">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ getFormatDate(row.createdAt)}}
+              </ng-template>
+          </ngx-datatable-column>
+
+          <!-- action buttons -->
+          <ngx-datatable-column name="Acciones" sortable="false" [minWidth]="150"
+              [maxWidth]="150">
+              <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex"
+                  ngx-datatable-cell-template>
+                      <button class="btn tblActnBtn h-auto"
+                      matTooltip="Modificar información de este diagnóstico"
+                      matTooltipPosition="above"
+                      
+                          (click)="editCurrency(row)">
+                          <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn tblActnBtn h-auto"
+                      matTooltip="Modificar información de este diagnóstico"
+                      matTooltipPosition="above"
+                          (click)="deleteCurrency(row)">
+                          <i class="fas fa-trash"></i>
+                      </button>
+              </ng-template>
+          </ngx-datatable-column>
+      </ngx-datatable>
+
     </div>
+
+    <!--Modal-->
+
+    <ng-template #template>
+      <app-currency-form></app-currency-form>
+    </ng-template>
+
     <div *ngIf="isLoading">
         <svg class="splash-spinner" viewBox="0 0 50 50">
             <circle
@@ -15,6 +87,6 @@
             ></circle>
           </svg>
     </div>
-    <button (click)="addCurrency()">Add Currency</button>
+    
 </div>
   
