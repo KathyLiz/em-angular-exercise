@@ -6,7 +6,7 @@
 </div>
 <div class="modal-body">
     <form class="example-form" [formGroup]="currencyForm">
-
+        
         <!--<mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Email</mat-label>
           <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
@@ -21,43 +21,39 @@
         </mat-form-field>-->
 
         <div class="row">
-            <div class="col-md-4">
-
-                <mat-label>Currency position</mat-label>
-            </div>
-            <div class="col-md-8">
-
-                <mat-radio-group formControlName="currencyPosition" aria-label="Select an option">
-                    <mat-radio-button value="AFTER">After</mat-radio-button>
-                    <mat-radio-button value="BEFORE">Before</mat-radio-button>
-                </mat-radio-group>
+            <div class="col-md-12">
+                <mat-form-field  appearance="outline">
+                    <mat-label>Currency position</mat-label>
+                    <mat-select formControlName="currencyPosition">
+                      <mat-option value="AFTER">After</mat-option>
+                      <mat-option value="BEFORE">Before</mat-option>
+                    </mat-select>
+                  </mat-form-field>
             </div>
 
         </div>
 
         <div class="row">
-            <div class="col-md-4">
-                <mat-label>Thousand identifier</mat-label>
-            </div>
-            <div class="col-md-8">
-
-                <mat-radio-group formControlName="thousandIdentifier" aria-label="Select an option">
-                    <mat-radio-button value=",">Comma (,)</mat-radio-button>
-                    <mat-radio-button value=".">Dot (.)</mat-radio-button>
-                </mat-radio-group>
+            <div class="col-md-12">
+                <mat-form-field  appearance="outline">
+                    <mat-label>Thousand identifier</mat-label>
+                    <select matNativeControl formControlName="thousandIdentifier">
+                      <option value=",">Comma (,)</option>
+                      <option value=".">Dot (.)</option>
+                    </select>
+                  </mat-form-field>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-4">
-                <mat-label>Decimal separator</mat-label>
-            </div>
-            <div class="col-md-8">
-
-                <mat-radio-group formControlName="decimalSeparator" aria-label="Select an option">
-                    <mat-radio-button value=",">Comma (,)</mat-radio-button>
-                    <mat-radio-button value=".">Dot (.)</mat-radio-button>
-                </mat-radio-group>
+            <div class="col-md-12">
+                <mat-form-field  appearance="outline">
+                    <mat-label>Decimal separator</mat-label>
+                    <select matNativeControl formControlName="decimalSeparator">
+                      <option value=",">Comma (,)</option>
+                      <option value=".">Dot (.)</option>
+                    </select>
+                  </mat-form-field>
             </div>
         </div>
 
@@ -66,7 +62,7 @@
                 <mat-form-field class="example-full-width" appearance="outline">
                     <mat-label>Cents</mat-label>
                     <input matInput placeholder="0" formControlName="cents">
-                </mat-form-field>
+                  </mat-form-field>
             </div>
         </div>
         <mat-checkbox class="example-margin" formControlName="userCode" labelPosition="after">
