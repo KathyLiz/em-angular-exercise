@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Valida
 import { ErrorStateMatcher } from '@angular/material/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { CustomValidators } from 'ngx-custom-validators';
+import { Subject } from 'rxjs';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -19,11 +21,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./currency-form.component.scss']
 })
 export class CurrencyFormComponent implements OnInit {
-  
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
 
   currencyForm: FormGroup;
 
@@ -31,18 +28,24 @@ export class CurrencyFormComponent implements OnInit {
 
   constructor(public activeModal: NgbActiveModal, private fb: FormBuilder) { 
     this.currencyForm = this.fb.group({
-      userCode: [''],
-      cents: [''],
-      currencyPosition: [''],
-      thousandIdentifier: [''],
-      decimalSeparator: ['']
-    });
+      userCode: [null,[Validators.required]],
+      cents: [null, [CustomValidators.range([0, 4])]],
+      currencyPosition: [null,[Validators.required]],
+      thousandIdentifier: [null,[Validators.required]],
+      decimalSeparator: [null,[Validators.required]],
 
+    });
   }
 
   ngOnInit(): void {
-
+    this.currencyForm.valueChanges.subscribe(selectedValue => {
+      console.log('My changed values for inside', selectedValue);
+  });
    
+  }
+
+  saveCurrency(){
+    console.log(this.currencyForm.value);
   }
 
 }
