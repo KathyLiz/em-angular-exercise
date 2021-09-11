@@ -44,7 +44,7 @@ export class CurrencyFormComponent implements OnInit {
     this.currencyForm = this.fb.group({
       country: [null, [Validators.required]],//"US",
       languageIsoCode: "es",
-      useCode: [null, [Validators.required]],
+      useCode: [false],
       cents: [null, [CustomValidators.range([0, 4])]],
       currencyPosition: [null, [Validators.required]],
       thousandIdentifier: [null, [Validators.required]],

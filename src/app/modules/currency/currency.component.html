@@ -23,6 +23,11 @@
             {{ row.currencyCode }}
           </ng-template>
         </ngx-datatable-column>
+        <ngx-datatable-column name="Format">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <currency-format [currency]="row"> </currency-format>
+          </ng-template>
+        </ngx-datatable-column> 
         <ngx-datatable-column name="Creation date">
           <ng-template let-row="row" ngx-datatable-cell-template>
             {{ getFormatDate(row.createdAt)}}

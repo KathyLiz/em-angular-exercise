@@ -6,10 +6,10 @@
 </div>
 <div class="modal-body">
     <p *ngIf="title == 'Error'" align="center">
-        <i class="fas fa-exclamation-circle fa-5x col-warning"></i>
+        <i class="fas fa-exclamation-circle fa-5x" appIconDirective defaultColor="#FFA800"></i>
     </p>
     <p *ngIf="title == 'Success'" align="center">
-        <i class="fas fa-exclamation-circle fa-5x col-primary"></i>
+        <i class="fas fa-exclamation-circle fa-5x" appIconDirective></i>
     </p>
    <h5 align="center">
     {{message}}

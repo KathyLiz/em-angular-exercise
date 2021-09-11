@@ -1,8 +1,8 @@
 <div class="currency">
     
     <div class="d-flex align-items-center">
-        <h3>{{ currency.languageIsoCode }}-{{ currency.countryCode }}</h3> 
-        <h5>&ensp;({{ currency.currencyCode }})</h5>
+        <h5>{{ currency.languageIsoCode }}-{{ currency.countryCode }}</h5> 
+        <h6>&ensp;({{ currency.currencyCode }})</h6>
     </div>
-    <price-preview [format]="currency.format"></price-preview>
+    <price-preview [format]="currency"></price-preview>
 </div>
