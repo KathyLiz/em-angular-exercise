@@ -36,11 +36,17 @@ export class PricePreview implements OnInit, OnChanges {
 
   @Input() format: Currency;
 
+  @Input() size: string;
+
   constructor() { }
 
 
 
   ngOnInit(): void {
+    this.generateFormat();
+  }
+
+  generateFormat() {
     if (this.format.format) {
       if (this.format.format.useCode) {
         this.getFormatWithCode();
@@ -52,27 +58,43 @@ export class PricePreview implements OnInit, OnChanges {
 
   getFormatWithCode() {
     if (this.format.format.currencyPosition == "AFTER") {
-      this.priceFormat = this.exampleThousands + this.validateThousandIdentifier() + this.exampleHundreds
+      this.priceFormat = this.validateThousandIdentifier()
         + this.getCents() + " " + this.format.currencyCode
     } else {
-      this.priceFormat = this.format.currencyCode + " " + this.exampleThousands + this.validateThousandIdentifier() + this.exampleHundreds
+      this.priceFormat = this.format.currencyCode + " " + this.validateThousandIdentifier()
         + this.getCents()
+    }
+  }
+
+  validateCurrencyCode() {
+    if (this.format.currencyCode) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  validatePosition() {
+    if (this.format.format.currencyPosition) {
+      return true;
+    } else {
+      return false;
     }
   }
 
   validateThousandIdentifier() {
     if (this.format.format.thousandIdentifier) {
-      return this.format.format.thousandIdentifier;
+      return this.exampleThousands + this.format.format.thousandIdentifier + this.exampleHundreds;
     }
-    return ","
+    return this.exampleThousands + "," + this.exampleHundreds
   }
 
   getFormatWithSymbol() {
     if (this.format.format.currencyPosition == "AFTER") {
-      this.priceFormat = this.exampleThousands + this.format.format.thousandIdentifier + this.exampleHundreds
+      this.priceFormat = this.validateThousandIdentifier()
         + this.getCents() + " " + this.getSymbol()
     } else {
-      this.priceFormat = this.getSymbol() + " " + this.exampleThousands + this.format.format.thousandIdentifier + this.exampleHundreds
+      this.priceFormat = this.getSymbol() + " " + this.validateThousandIdentifier()
         + this.getCents()
     }
   }
@@ -102,6 +124,7 @@ export class PricePreview implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-
+    console.log("changes");
+    this.generateFormat();
   }
 }

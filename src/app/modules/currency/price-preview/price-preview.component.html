@@ -1,4 +1,5 @@
 <div>
     <!-- Price preview here -->
-    <h5>{{ priceFormat }}</h5>
+    <h5 *ngIf="size=='small'">{{ priceFormat }}</h5>
+    <h1 align="center" *ngIf="size=='big'">{{ priceFormat }}</h1>
 </div>

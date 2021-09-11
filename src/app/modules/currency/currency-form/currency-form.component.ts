@@ -39,13 +39,28 @@ export class CurrencyFormComponent implements OnInit {
 
   errorSeparators:string;
 
+  currencyPreview:Currency = {
+    "_id": "61227d5453e7b5000940263e",
+    "countryCode": "AR",
+    "languageIsoCode": "es",
+    "currencyCode": "USD",
+    "format": {
+      "useCode": true,
+      "cents": 2,
+      "currencyPosition": "BEFORE",
+      "thousandIdentifier": ",",
+      "decimalSeparator": "."
+    },
+    "createdAt": "2021-08-22T16:37:40.948Z"
+  };
+
 
   constructor(public activeModal: NgbActiveModal, private fb: FormBuilder) {
     this.currencyForm = this.fb.group({
       country: [null, [Validators.required]],//"US",
       languageIsoCode: "es",
       useCode: [false],
-      cents: [null, [CustomValidators.range([0, 4])]],
+      cents: [0, [CustomValidators.range([0, 4])]],
       currencyPosition: [null, [Validators.required]],
       thousandIdentifier: [null, [Validators.required]],
       decimalSeparator: [null, [Validators.required]],
@@ -59,6 +74,7 @@ export class CurrencyFormComponent implements OnInit {
     this.setFormValues();
     this.currencyForm.valueChanges.subscribe(formValue => {
       console.log('My changed values for inside', formValue);
+      this.currencyPreview = this.createCurrencyStructure();
     });
     this.filteredCountries = this.countries.slice();
   }
@@ -98,35 +114,48 @@ export class CurrencyFormComponent implements OnInit {
       currency['country'] = this.findCountry();
       currency['languageIsoCode'] = this.currencyRecibed.languageIsoCode;
       console.log(currency);
-      this.currencyForm.setValue(currency)
+      this.currencyForm.setValue(currency);
+      this.currencyPreview = {...this.currencyRecibed}
     }
   }
+
+  
 
   findCountry() {
     return this.countries.filter(item => item.countryCode == this.currencyRecibed.countryCode)[0];
   }
 
-  saveCurrency() {
+  createCurrencyStructure(){
     let format = { ...this.currencyForm.value };
     delete format.languageIsoCode;
     delete format.country;
-    console.log(this.currencyForm.value);
-    console.log(format);
 
     if (this.currencyRecibed) {
       this.currencyRecibed.format = format;
       this.currencyRecibed.countryCode = this.currencyForm.value.country.countryCode;
       this.currencyRecibed.currencyCode = this.currencyForm.value.country.currencyCode;
       this.currencyRecibed.languageIsoCode = "es";
-      this.activeModal.close(this.currencyRecibed);
+      return this.currencyRecibed;
     } else {
       let newCurrency: any = {};
       newCurrency['format'] = format;
       newCurrency['countryCode'] = this.currencyForm.value.country.countryCode;
       newCurrency['currencyCode'] = this.currencyForm.value.country.currencyCode;
       newCurrency['languageIsoCode'] = "es";
-      this.activeModal.close(newCurrency);
+      return newCurrency;
     }
+  }
+
+  validateCountry(){
+    if(this.currencyForm.value.country){
+      return this.currencyForm.value.country
+    }else {
+      return null
+    }
+  }
+
+  saveCurrency() {
+    this.activeModal.close(this.createCurrencyStructure());
   }
 
 }
