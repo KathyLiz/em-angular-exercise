@@ -37,6 +37,8 @@ export class CurrencyFormComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
   filteredCountries: any;
 
+  errorSeparators:string;
+
 
   constructor(public activeModal: NgbActiveModal, private fb: FormBuilder) {
     this.currencyForm = this.fb.group({
@@ -55,10 +57,39 @@ export class CurrencyFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.setFormValues();
-    this.currencyForm.valueChanges.subscribe(selectedValue => {
-      console.log('My changed values for inside', selectedValue);
+    this.currencyForm.valueChanges.subscribe(formValue => {
+      console.log('My changed values for inside', formValue);
     });
     this.filteredCountries = this.countries.slice();
+  }
+
+  removeErrorsSeparators(){
+    this.currencyForm.controls['decimalSeparator'].setErrors(null);
+    this.currencyForm.controls['thousandIdentifier'].setErrors(null);
+  }
+
+  changeThousandIdentifier($event){
+    console.log(this.currencyForm.value)
+    if($event.value == this.currencyForm.value.decimalSeparator){
+      this.currencyForm.controls['thousandIdentifier'].setErrors({'incorrect': true});
+      this.errorSeparators = "Thousand identifier can't be the same as the Decimal separator"
+    }else {
+      this.removeErrorsSeparators();
+      this.errorSeparators ="Your selection is invalid"
+    }
+    console.log("changeThousandIdentifier",this.errorSeparators);
+  }
+
+  changeDecimalSeparator($event){
+    console.log("separator",this.currencyForm.value)
+    if($event.value == this.currencyForm.value.thousandIdentifier){
+      this.currencyForm.controls['decimalSeparator'].setErrors({'incorrect': true});
+      this.errorSeparators = "Decimal separator can't be the same as the thousand identifier"
+    }else {
+      this.removeErrorsSeparators();
+      this.errorSeparators ="Your selection is invalid"
+    }
+    console.log("changeDecimalSeparator",this.errorSeparators);
   }
 
   setFormValues() {
