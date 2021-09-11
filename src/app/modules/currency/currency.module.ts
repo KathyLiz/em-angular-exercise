@@ -18,6 +18,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatRadioModule} from '@angular/material/radio';
 import { MatSelectFilterModule } from 'mat-select-filter';
+import { ResultMessageComponent } from './result-message/result-message.component';
 const routes: Routes = [
     {
       path: '',
@@ -57,7 +58,8 @@ const routes: Routes = [
       CurrencyComponent,
       CurrencyFormat,
       PricePreview,
-      CurrencyFormComponent
+      CurrencyFormComponent,
+      ResultMessageComponent
   ],
   providers: [
     CurrencyApiService

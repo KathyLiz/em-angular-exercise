@@ -6,6 +6,7 @@ import { getStringFormatDate } from 'src/app/_metronic/core/index';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CurrencyFormComponent } from './currency-form/currency-form.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ResultMessageComponent } from './result-message/result-message.component';
 
 interface Response {
   total: number;
@@ -55,7 +56,7 @@ export class CurrencyComponent implements OnInit {
       } else {
         this.addCurrency(result);
       }
-      
+
     }, (reason) => {
       console.log('Dismissed action: ' + reason);
     });
@@ -75,10 +76,11 @@ export class CurrencyComponent implements OnInit {
   addCurrency(currency?: Currency) {
     this.currencyService.addCurrency(currency)
       .subscribe(data => {
-        console.log("result ",data)
+        console.log("result ", data)
         this.getCurrencies();
-      }, error =>{
-        console.log("error ",error)
+      }, error => {
+        this.showResultMessage('Error', "Ups! Something went wrong. Please try again later.");
+        console.log("error ", error)
       })
   }
 
@@ -86,19 +88,31 @@ export class CurrencyComponent implements OnInit {
     this.currencyService.updateCurrency(currency).then((response: Response) => {
       this.getCurrencies();
     })
-      .catch((err) => { console.log(err)})
+      .catch((err) => {
+        this.showResultMessage('Error', "Ups! Something went wrong. Please try again later.");
+        console.log(err)
+      })
   }
 
   deleteCurrency(currency?: Currency) {
     this.currencyService.deleteCurrency(currency._id).then((response: Response) => {
       this.getCurrencies();
     })
-      .catch((err) => { console.log(err)})
+      .catch((err) => {
+        this.showResultMessage('Error', "Ups! Something went wrong. Please try again later.");
+        console.log(err)
+      })
   }
 
   //Date format 
   getFormatDate(date) {
     return getStringFormatDate(date);
+  }
+
+  showResultMessage(title, message) {
+    const modalRef = this.modalService.open(ResultMessageComponent);
+    modalRef.componentInstance.title = title;
+    modalRef.componentInstance.message = message;
   }
 
   //#region Filter table

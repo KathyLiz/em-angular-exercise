@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{title}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="activeModal.dismiss()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <p *ngIf="title == 'Error'" align="center">
+        <i class="fas fa-exclamation-circle fa-5x col-warning"></i>
+    </p>
+    <p *ngIf="title == 'Success'" align="center">
+        <i class="fas fa-exclamation-circle fa-5x col-primary"></i>
+    </p>
+   <h5 align="center">
+    {{message}}
+   </h5>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn" [ngClass]="title == 'Error'? 'btn-warning':'btn-primary'" (click)="activeModal.dismiss()">Ok</button>
+</div>
