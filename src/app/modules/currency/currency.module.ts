@@ -17,6 +17,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatRadioModule} from '@angular/material/radio';
+import { MatSelectFilterModule } from 'mat-select-filter';
 const routes: Routes = [
     {
       path: '',
@@ -45,7 +46,8 @@ const routes: Routes = [
     MatCheckboxModule,
     MatSelectModule,  
     NgbModalModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSelectFilterModule
   ],
   exports: [
     RouterModule,

@@ -23,17 +23,25 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class CurrencyFormComponent implements OnInit {
 
-  @Input() currencyRecibed: Currency;
+  POSITIONS = [{ value: "AFTER" }, { value: "BEFORE" }]
+  SEPARATORS = [{ value: ",", text: "Comma (,)" }, { value: ".", text: "Dot (.)" }]
+  filteredPositions = this.POSITIONS.slice();
+  filteredSeparators = this.SEPARATORS.slice();
+
+  @Input() currencyRecibed: Currency = null;
+
+  @Input() countries: any;
 
   currencyForm: FormGroup;
 
   matcher = new MyErrorStateMatcher();
+  filteredCountries: any;
+
 
   constructor(public activeModal: NgbActiveModal, private fb: FormBuilder) {
     this.currencyForm = this.fb.group({
-      countryCode: [null, [Validators.required]],//"US",
+      country: [null, [Validators.required]],//"US",
       languageIsoCode: "es",
-      currencyCode: [null, [Validators.required]],//"MXN",
       useCode: [null, [Validators.required]],
       cents: [null, [CustomValidators.range([0, 4])]],
       currencyPosition: [null, [Validators.required]],
@@ -41,6 +49,8 @@ export class CurrencyFormComponent implements OnInit {
       decimalSeparator: [null, [Validators.required]],
 
     });
+
+
   }
 
   ngOnInit(): void {
@@ -48,19 +58,44 @@ export class CurrencyFormComponent implements OnInit {
     this.currencyForm.valueChanges.subscribe(selectedValue => {
       console.log('My changed values for inside', selectedValue);
     });
-
+    this.filteredCountries = this.countries.slice();
   }
 
   setFormValues() {
     if (this.currencyRecibed) {
-      console.log(this.currencyRecibed.format);
-      this.currencyForm.setValue(this.currencyRecibed.format)
+      let currency: any = { ...this.currencyRecibed.format }
+      currency['country'] = this.findCountry();
+      currency['languageIsoCode'] = this.currencyRecibed.languageIsoCode;
+      console.log(currency);
+      this.currencyForm.setValue(currency)
     }
   }
 
+  findCountry() {
+    return this.countries.filter(item => item.countryCode == this.currencyRecibed.countryCode)[0];
+  }
+
   saveCurrency() {
+    let format = { ...this.currencyForm.value };
+    delete format.languageIsoCode;
+    delete format.country;
     console.log(this.currencyForm.value);
-    
+    console.log(format);
+
+    if (this.currencyRecibed) {
+      this.currencyRecibed.format = format;
+      this.currencyRecibed.countryCode = this.currencyForm.value.country.countryCode;
+      this.currencyRecibed.currencyCode = this.currencyForm.value.country.currencyCode;
+      this.currencyRecibed.languageIsoCode = "es";
+      this.activeModal.close(this.currencyRecibed);
+    } else {
+      let newCurrency: any = {};
+      newCurrency['format'] = format;
+      newCurrency['countryCode'] = this.currencyForm.value.country.countryCode;
+      newCurrency['currencyCode'] = this.currencyForm.value.country.currencyCode;
+      newCurrency['languageIsoCode'] = "es";
+      this.activeModal.close(newCurrency);
+    }
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit,ChangeDetectorRef, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, TemplateRef } from '@angular/core';
 import { DatatableComponent, ColumnMode } from '@swimlane/ngx-datatable';
 import { CurrencyApiService } from 'src/app/services/currency.service';
 import { Currency } from './currency-format/currency-format.typings';
@@ -24,55 +24,74 @@ export class CurrencyComponent implements OnInit {
   isLoading: boolean = true;
 
   //table variables
-  columns = [{ name: 'countryCode' }, { name: 'currencyCode' }, {name:'languageIsoCode'}];
+  columns = [{ name: 'countryCode' }, { name: 'currencyCode' }, { name: 'languageIsoCode' }];
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
 
   ColumnMode = ColumnMode;
 
   bsModalRef?: BsModalRef;
+  countries: any;
 
   //private modalService: BsModalService,
-  constructor(private currencyService: CurrencyApiService, private ref: ChangeDetectorRef, private modalService: NgbModal) { 
+  constructor(private currencyService: CurrencyApiService, private ref: ChangeDetectorRef, private modalService: NgbModal) {
 
   }
-
-  
-
-  
-
   ngOnInit(): void {
-    this.currencyService.getCurrencies().then((response: Response) => {
-        this.currencies = response.result;
-        this.filteredCurrencies = [...this.currencies];
-        
-        this.isLoading = false;
-        this.ref.detectChanges();
-    })
-    .catch((err) => { })
+
+    this.countries = this.currencyService.getCountries().countries;
+    this.getCurrencies();
   }
 
-  addEditCurrency(currency?:Currency) {
+  addEditCurrency(currency?: Currency) {
     //this.bsModalRef = this.modalService.show(CurrencyFormComponent);
-   // this.bsModalRef.content.closeBtnName = 'Close';
-   const modalRef = this.modalService.open(CurrencyFormComponent);
-   modalRef.componentInstance.currencyRecibed = currency;
-   modalRef.result.then((result) => {
-    console.log(result)
-  }, (reason) => {
-    console.log('Dismissed action: ' + reason);
-  });
+    // this.bsModalRef.content.closeBtnName = 'Close';
+    const modalRef = this.modalService.open(CurrencyFormComponent);
+    modalRef.componentInstance.currencyRecibed = currency;
+    modalRef.componentInstance.countries = this.countries;
+    modalRef.result.then((result: Currency) => {
+      console.log(result)
+      if (result._id) {
+        this.editCurrency(result);
+      } else {
+        this.addCurrency(result);
+      }
+      
+    }, (reason) => {
+      console.log('Dismissed action: ' + reason);
+    });
   }
 
-  editCurrency(currency?:Currency){
+  getCurrencies() {
+    this.currencyService.getCurrencies().then((response: Response) => {
+      this.currencies = response.result;
+      this.filteredCurrencies = [...this.currencies];
+
+      this.isLoading = false;
+      this.ref.detectChanges();
+    })
+      .catch((err) => { })
+  }
+
+  addCurrency(currency?: Currency) {
+    this.currencyService.addCurrency(currency)
+      .subscribe(data => {
+        console.log("respuesta ",data)
+        this.getCurrencies();
+      }, error =>{
+        console.log("error ",error)
+      })
+  }
+
+  editCurrency(currency?: Currency) {
 
   }
 
-  deleteCurrency(currency?:Currency){
+  deleteCurrency(currency?: Currency) {
 
   }
 
   //Date format 
-  getFormatDate(date){
+  getFormatDate(date) {
     return getStringFormatDate(date);
   }
 
@@ -84,15 +103,15 @@ export class CurrencyComponent implements OnInit {
 
     // assign filtered matches to the active datatable
     this.currencies = this.filteredCurrencies.filter(function (item) {
-        // iterate through each row's column data
-        for (let i = 0; i < keys.length; i++) {
-            if (item[keys[i].name].toString().toLowerCase().indexOf(val) !== -1 || !val) {
-                return true;
-            }
+      // iterate through each row's column data
+      for (let i = 0; i < keys.length; i++) {
+        if (item[keys[i].name].toString().toLowerCase().indexOf(val) !== -1 || !val) {
+          return true;
         }
+      }
     });
     this.table.offset = 0;
-}
+  }
   //#endregion
 
 }
