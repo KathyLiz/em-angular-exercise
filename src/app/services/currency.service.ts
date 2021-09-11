@@ -37,6 +37,16 @@ export class CurrencyApiService {
         return this.http.post(url, currency,{headers:headers})
       }
 
+      deleteCurrency(currencyId:string){
+        const url = this.apiUrl + `currency-format/`+currencyId;
+    	return this.http.delete(url, {headers: this.createHeaders()}).toPromise();
+      }
+
+      updateCurrency(currency:Currency){
+        const url = this.apiUrl + `currency-format/`+currency._id;
+    	return this.http.put(url, currency, {headers: this.createHeaders()}).toPromise();
+      }
+
     // --- Add the rest of your CRUD operations here ---
 
 }

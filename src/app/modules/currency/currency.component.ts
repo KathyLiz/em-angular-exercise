@@ -75,7 +75,7 @@ export class CurrencyComponent implements OnInit {
   addCurrency(currency?: Currency) {
     this.currencyService.addCurrency(currency)
       .subscribe(data => {
-        console.log("respuesta ",data)
+        console.log("result ",data)
         this.getCurrencies();
       }, error =>{
         console.log("error ",error)
@@ -83,11 +83,17 @@ export class CurrencyComponent implements OnInit {
   }
 
   editCurrency(currency?: Currency) {
-
+    this.currencyService.updateCurrency(currency).then((response: Response) => {
+      this.getCurrencies();
+    })
+      .catch((err) => { console.log(err)})
   }
 
   deleteCurrency(currency?: Currency) {
-
+    this.currencyService.deleteCurrency(currency._id).then((response: Response) => {
+      this.getCurrencies();
+    })
+      .catch((err) => { console.log(err)})
   }
 
   //Date format 
