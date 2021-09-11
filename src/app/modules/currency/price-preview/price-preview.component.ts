@@ -124,7 +124,7 @@ export class PricePreview implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("changes");
+    console.log("changes here ");
     this.generateFormat();
   }
 }

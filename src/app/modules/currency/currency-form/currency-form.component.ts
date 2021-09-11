@@ -73,8 +73,9 @@ export class CurrencyFormComponent implements OnInit {
   ngOnInit(): void {
     this.setFormValues();
     this.currencyForm.valueChanges.subscribe(formValue => {
-      console.log('My changed values for inside', formValue);
+      console.log('My changed values for inside', formValue.useCode);
       this.currencyPreview = this.createCurrencyStructure();
+      console.log('My afer', formValue.useCode);
     });
     this.filteredCountries = this.countries.slice();
   }
@@ -113,7 +114,6 @@ export class CurrencyFormComponent implements OnInit {
       let currency: any = { ...this.currencyRecibed.format }
       currency['country'] = this.findCountry();
       currency['languageIsoCode'] = this.currencyRecibed.languageIsoCode;
-      console.log(currency);
       this.currencyForm.setValue(currency);
       this.currencyPreview = {...this.currencyRecibed}
     }
@@ -130,12 +130,14 @@ export class CurrencyFormComponent implements OnInit {
     delete format.languageIsoCode;
     delete format.country;
 
-    if (this.currencyRecibed) {
-      this.currencyRecibed.format = format;
-      this.currencyRecibed.countryCode = this.currencyForm.value.country.countryCode;
-      this.currencyRecibed.currencyCode = this.currencyForm.value.country.currencyCode;
-      this.currencyRecibed.languageIsoCode = "es";
-      return this.currencyRecibed;
+    let copyRecibed = {...this.currencyRecibed}
+
+    if (copyRecibed) {
+      copyRecibed.format = format;
+      copyRecibed.countryCode = this.currencyForm.value.country.countryCode;
+      copyRecibed.currencyCode = this.currencyForm.value.country.currencyCode;
+      copyRecibed.languageIsoCode = "es";
+      return copyRecibed;
     } else {
       let newCurrency: any = {};
       newCurrency['format'] = format;
